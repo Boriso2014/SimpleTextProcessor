@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'simple-text-processor';
+
+  public goToFiles = () => {
+    alert('Go to files clicked');
+  };
 }
