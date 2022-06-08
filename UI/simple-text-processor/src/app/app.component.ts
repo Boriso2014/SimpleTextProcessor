@@ -5,10 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'simple-text-processor';
-
-  public goToFiles = () => {
-    alert('Go to files clicked');
-  };
-}
+export class AppComponent { }
