@@ -1,3 +1,24 @@
 <div class="container">
-    <a href="add" class="btn btn-primary" role="button">New file</a>
+  <div class="container">
+    <h1>List of files:</h1>
+    <button type="button" class="btn btn-light" (click)="redirectToAdd()"><u>+New file</u></button>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Size</th>
+          <th>Created On</th>
+          <th width="220px">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let file of files">
+          <td class="item" (click)="redirectToUpdate(file.name)">{{ file.name }}</td>
+          <td>{{ file.size }}</td>
+          <td>{{ file.createdOn }}</td>
+          <td class="item" (click)="openDeleteConfirmDialog(file.name)">Delete</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

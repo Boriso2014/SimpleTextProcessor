@@ -10,6 +10,7 @@ import { ListComponent } from './files/list/list.component';
 import { HomeComponent } from './home/home.component';
 import { AddComponent } from './files/add/add.component';
 import { UpdateComponent } from './files/update/update.component';
+import { ConfirmDeleteComponent } from './dialogs/confirm-delete/confirm-delete.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { UpdateComponent } from './files/update/update.component';
     ListComponent,
     HomeComponent,
     AddComponent,
-    UpdateComponent
+    UpdateComponent,
+    ConfirmDeleteComponent
   ],
   imports: [
     BrowserModule,

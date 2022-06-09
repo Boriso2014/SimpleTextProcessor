@@ -1,22 +1,19 @@
 <div class="container">
-    <!-- <a href="list" class="btn btn-primary btn-sm" role="button">Go to files</a> -->
-    <a href="list" class="alert-link">Go to files</a>
-    <form [formGroup]="addForm" autocomplete="off" novalidate (ngSubmit)="submitForm(addForm.value)">
-        <div class="form-group">
-
-            <label for="txt">Enter your text:</label>
-            <!-- <p></p> -->
-            <textarea id="txt" class="form-control" formControlName="txt" requered autofocus></textarea>
-            <small class="text-danger" *ngIf="(hasError('txt', 'required') && addForm.controls['txt'].dirty)">Field is
-                required</small>
-            <p></p>
-            <input type="text" id="name" class="form-control" formControlName="name" placeholder="File name" requered />
-            <small class="text-danger" *ngIf="(hasError('name', 'required') && addForm.controls['name'].dirty)">Field is
-                required</small>
-        </div>
-        <p></p>
-        <div>
-            <button type="submit" class="btn btn-primary" [disabled]="!addForm.valid">Upload</button>
-        </div>
-    </form>
+  <!-- <a href="list" class="btn btn-primary btn-sm" role="button">Go to files</a> -->
+  <button type=button class="btn btn-light" (click)="goToFiles()"><u>Go to files</u></button>
+  <form [formGroup]="addForm" autocomplete="off" novalidate (ngSubmit)="submitForm(addForm.value)">
+    <div class="form-group">
+      <textarea id="txt" class="form-control" formControlName="txt" placeholder="Enter your text" requered
+        autofocus></textarea>
+      <small class="text-danger" *ngIf="(hasError('txt', 'required') && addForm.controls['txt'].dirty)">Field is
+        required</small>
+      <p></p>
+      <input type="text" id="name" class="form-control" formControlName="name" placeholder="File name" requered />
+      <small class="text-danger" *ngIf="(hasError('name', 'required') && addForm.controls['name'].dirty)">Field is
+        required</small>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary" [disabled]="!addForm.valid">Upload</button>
+    </div>
+  </form>
 </div>

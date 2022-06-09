@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from  '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { TextModel } from '../text.model'
 import { TextService } from '../text.service'
@@ -12,7 +13,7 @@ import { TextService } from '../text.service'
 export class AddComponent implements OnInit {
   public addForm!: FormGroup;
 
-  constructor(private _textService: TextService) { }
+  constructor(private _textService: TextService, private _router: Router) { }
 
   ngOnInit(): void {
     this.addForm = new FormGroup({
@@ -30,15 +31,21 @@ export class AddComponent implements OnInit {
     };
 
     this._textService.upload(model)
-    .subscribe({
-      next: (res: any) => {
-        console.info(res);
-      },
-      error: (err: any) => {
-        // Handle an error
-        console.log(err);
-      }
-    });
+      .subscribe({
+        next: (res: any) => {
+          alert(res.message);
+          console.info(res.message);
+        },
+        error: (err: any) => {
+          // Handle an error
+          console.error(err);
+        }
+      });
+  };
+
+  public goToFiles = () => {
+    const url: string = 'list';
+    this._router.navigateByUrl(url);
   };
 
   public hasError = (controlName: string, errorName: string) => {

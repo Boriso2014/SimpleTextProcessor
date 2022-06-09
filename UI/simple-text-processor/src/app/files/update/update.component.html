@@ -1,1 +1,18 @@
-<p>update works!</p>
+<div class="container">
+    <button type = button class="btn btn-light" (click)="goToFiles()"><u>Go to files</u></button>
+    <form [formGroup]="updateForm" autocomplete="off" novalidate (ngSubmit)="submitForm(updateForm.value)">
+        <div class="form-group">
+            <textarea id="txt" class="form-control" formControlName="txt" requered autofocus></textarea>
+            <small class="text-danger" *ngIf="(hasError('txt', 'required') && updateForm.controls['txt'].dirty)">Field is
+                required</small>
+            <p></p>
+            <input type="text" id="name" class="form-control" formControlName="name" placeholder="File name" requered />
+            <small class="text-danger" *ngIf="(hasError('name', 'required') && updateForm.controls['name'].dirty)">Field is
+                required</small>
+        </div>
+        <p></p>
+        <div>
+            <button type="submit" class="btn btn-primary" [disabled]="!updateForm.valid">Upload</button>
+        </div>
+    </form>
+</div>

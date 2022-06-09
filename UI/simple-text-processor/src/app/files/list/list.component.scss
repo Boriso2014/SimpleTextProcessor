@@ -2,3 +2,8 @@ button:focus {
     outline: none;
     box-shadow: none;
   }
+
+  td.item:hover {
+    cursor: pointer;
+    color: lightslategray;
+  }
