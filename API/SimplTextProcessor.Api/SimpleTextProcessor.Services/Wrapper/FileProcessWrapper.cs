@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimpleTextProcessor.Services.Wrapper
+﻿namespace SimpleTextProcessor.Services.Wrapper
 {
     public sealed class FileProcessWrapper: IFileProcessWrapper
     {
         public async Task WriteLineAsync(string path, string text, bool append)
         {
             using var writer = new StreamWriter(path, append);
-            await writer.WriteLineAsync(text);
+            await writer.WriteAsync(text);
         }
 
         public async Task<string> ReadToEndAsync(string path)
