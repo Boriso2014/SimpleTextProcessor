@@ -1,6 +1,7 @@
 
 using SimpleTextProcessor.Services;
 using SimpleTextProcessor.Services.Converter;
+using SimpleTextProcessor.Services.Middleware;
 using SimpleTextProcessor.Services.Wrapper;
 
 var simpleTextProcessorOrigins = "SimpleTextProcessorOrigins";
@@ -28,6 +29,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseCors(simpleTextProcessorOrigins);
+app.UseExceptionHandling();
 
 app.UseAuthorization();
 
