@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SimpleTextProcessor.Services;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using SimpleTextProcessor.Services.Dto;
 
 namespace SimplTextProcessor.Api.Controllers
 {
@@ -11,11 +9,11 @@ namespace SimplTextProcessor.Api.Controllers
     public class TextsController : ControllerBase
     {
         private readonly string _uploadsFolder;
-        private readonly IFileInfoConverter _fileInfoConverter;
+        private readonly ITextProcessor _textProcessor;
 
-        public TextsController(IWebHostEnvironment hostingEnvironment, IFileInfoConverter converter)
+        public TextsController(IWebHostEnvironment hostingEnvironment, ITextProcessor textProcessor)
         {
-            _fileInfoConverter = converter;
+            _textProcessor = textProcessor;
             var webRootPath = hostingEnvironment.WebRootPath;
             _uploadsFolder = Path.Combine(webRootPath, "uploads");
             if (!Directory.Exists(_uploadsFolder))
@@ -24,23 +22,19 @@ namespace SimplTextProcessor.Api.Controllers
             }
         }
 
+        // GET: api/texts/files
+        [HttpGet("files")]
+        public IActionResult GetFiles()
+        {
+            var fileDtos = _textProcessor.ExecuteGetFiles(_uploadsFolder);
+            return Ok(fileDtos);
+        }
+
         // POST api/texts/upload
         [HttpPost("upload")]
         public async Task<IActionResult> Upload(TextDto dto)
         {
-            try
-            {
-                var fileName = Path.ChangeExtension(dto.Name, ".txt");
-                string fullPath = Path.Combine(_uploadsFolder, fileName);
-                using (var writer = new StreamWriter(fullPath))
-                {
-                    await writer.WriteLineAsync(dto.Text);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
+            await _textProcessor.ExecuteUpload(dto, _uploadsFolder);
             var result = new
             {
                 message = "Upload successful"
@@ -49,35 +43,15 @@ namespace SimplTextProcessor.Api.Controllers
             return Ok(result);
         }
 
-        // GET: api/texts/files
-        [HttpGet("files")]
-        public IActionResult GetFiles()
+        // GET: api/texts/download/{name}/start/{start:int}/chunk-size/{chunkSize}"
+        [HttpGet("download/{name}/start/{start:int}/chunk-size/{chunkSize}")]
+        public async Task<IActionResult> Download(string name, int start, int chunkSize)
         {
-            var dirInfo = new DirectoryInfo(_uploadsFolder);
-            var files = dirInfo.GetFiles();
-            var fileDtos = files.Select(f => _fileInfoConverter.Convert(f));
-            return Ok(fileDtos);
-        }
-
-        // GET: api/texts/file?name={name}
-        [HttpGet("file")]
-        public async Task<IActionResult> GetFileContent([FromQuery] string name)
-        {
-            var dirInfo = new DirectoryInfo(_uploadsFolder);
-            var files = dirInfo.GetFiles();
-            var file = files.FirstOrDefault(f => f.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-            if (file == null)
+            var textDto = await _textProcessor.ExecuteDownload(name, start, chunkSize, _uploadsFolder);
+            if (textDto == null)
             {
                 return NotFound();
             }
-            string fullPath = Path.Combine(_uploadsFolder, name);
-            using var sr = new StreamReader(fullPath);
-            var content = await sr.ReadToEndAsync();
-            var textDto = new TextDto()
-            {
-                Name = name,
-                Text = content
-            };
 
             return Ok(textDto);
         }
@@ -86,21 +60,10 @@ namespace SimplTextProcessor.Api.Controllers
         [HttpDelete("file")]
         public IActionResult DeleteFile([FromQuery] string name)
         {
-            var message = "Delete successful";
-            var fullPath = Path.Combine(_uploadsFolder, name);
-            var file = new FileInfo(fullPath);
-            if (file.Exists)
-            {
-                file.Delete();
-            }
-            else
-            {
-                message = "File not found";
-            }
-
+            var message = _textProcessor.ExecuteDeleteFile(name, _uploadsFolder);
             var result = new
             {
-                message = message
+                message
             };
 
             return Ok(result);

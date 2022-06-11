@@ -39,8 +39,8 @@ export class ListComponent implements OnInit {
     this._router.navigateByUrl(url);
   }
 
-  public redirectToUpdate = (fileName: string) => {
-    const url: string = `update/${fileName}`;
+  public redirectToUpdate = (file: FileModel) => {
+    const url: string = `update/${file.name}/size/${file.size}`;
     this._router.navigateByUrl(url);
   }
 

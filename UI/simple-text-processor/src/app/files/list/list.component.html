@@ -13,7 +13,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let file of files">
-          <td class="item" (click)="redirectToUpdate(file.name)">{{ file.name }}</td>
+          <td class="item" (click)="redirectToUpdate(file)">{{ file.name }}</td>
           <td>{{ file.size }}</td>
           <td>{{ file.createdOn }}</td>
           <td class="item" (click)="openDeleteConfirmDialog(file.name)">Delete</td>

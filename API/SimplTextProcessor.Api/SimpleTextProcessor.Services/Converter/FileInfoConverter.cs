@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimpleTextProcessor.Services.Dto;
 
-namespace SimpleTextProcessor.Services
+namespace SimpleTextProcessor.Services.Converter
 {
     public sealed class FileInfoConverter : IFileInfoConverter
     {

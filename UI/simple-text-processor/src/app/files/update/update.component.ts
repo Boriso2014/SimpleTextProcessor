@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { TextModel } from '../text.model'
+import { lastValueFrom } from 'rxjs';
+import { Guid } from "guid-typescript";
+import { TransferTextModel } from '../transfer-text.model'
 import { TextService } from '../text.service'
 
 @Component({
@@ -11,7 +12,6 @@ import { TextService } from '../text.service'
   styleUrls: ['./update.component.scss']
 })
 export class UpdateComponent implements OnInit {
-  public file: TextModel = new TextModel();
   public updateForm!: FormGroup;
 
   constructor(private _textService: TextService,
@@ -23,28 +23,44 @@ export class UpdateComponent implements OnInit {
       txt: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required])
     });
-    this.getFileContent();
+    //this.getFileContent();
+    this.executeDownload();
   }
 
   public submitForm = (addFormValue: any) => {
-    const text: string = addFormValue.txt as string;
-    const name: string = addFormValue.name as string;
-    const model: TextModel = {
-      name: name,
-      text: text
-    };
+    this.executeUpload(addFormValue);
+  }
 
-    this._textService.upload(model)
-      .subscribe({
-        next: (res: any) => {
-          alert(res.message);
-          console.info(res.message);
-        },
-        error: (err: any) => {
-          // Handle an error
-          console.error(err);
-        }
-      });
+  private async executeUpload(addFormValue: any) {
+    const text: string = addFormValue.txt as string;
+    const nameWithExt: string = addFormValue.name as string;
+    const name: string = nameWithExt.substring(0, nameWithExt.lastIndexOf('.')) || nameWithExt; 
+    // const model: TransferTextModel = {
+    //   name: name,
+    //   text: text
+    // };
+    const guid: string = Guid.create().toString();
+    const tempFileName: string = `${name}_${guid}`;
+    const size: number = new Blob([text]).size;
+    const chunkSize: number = 500 * 1024;
+    let start: number = 0;
+    let end: number = chunkSize;
+
+    while (start < size) {
+      const chunkText: string = text.substring(start, end);
+      const chunkModel: TransferTextModel = {
+        name: tempFileName,
+        text: chunkText,
+        isLastChunk: end >= size
+      }
+      // upload chunk
+      const uploader$ = this._textService.upload(chunkModel);
+      const res = await lastValueFrom(uploader$);
+      start = ++end;
+      end = start + chunkSize;
+      console.info(res);
+    }
+    alert('Upload completed');
   };
 
   public goToFiles = () => {
@@ -56,23 +72,48 @@ export class UpdateComponent implements OnInit {
     return this.updateForm.controls[controlName].hasError(errorName);
   };
 
-  private getFileContent = () => {
+  // private getFileContent = () => {
+  //   const name: string = this._activeRoute.snapshot.params['name'];
+  //   this._textService.getFileContent(name)
+  //     .subscribe({
+  //       next: (res: any) => {
+  //         this.file = res as TransferTextModel;
+  //         this.updateForm.patchValue(
+  //           {
+  //             name: this.file.name,
+  //             txt: this.file.text
+  //           }
+  //         );
+  //       },
+  //       error: (err: any) => {
+  //         // Handle an error
+  //         console.error(err);
+  //       }
+  //     });
+  // }
+
+  private async executeDownload() {
     const name: string = this._activeRoute.snapshot.params['name'];
-    this._textService.getFileContent(name)
-      .subscribe({
-        next: (res: any) => {
-          this.file = res as TextModel;
-          this.updateForm.patchValue(
-            {
-              name: this.file.name,
-              txt: this.file.text
-            }
-          );
-        },
-        error: (err: any) => {
-          // Handle an error
-          console.error(err);
-        }
-      });
-  }
+    const size: number = this._activeRoute.snapshot.params['size'] as number;
+    const chunkSize: number = 500 * 1024;
+    let start: number = 0;
+    let end: number = chunkSize;
+    let content: string = '';
+    while (start < size) {
+      // download chunk
+      const downloader$ = this._textService.download(name, start, chunkSize);
+      const chunk = await lastValueFrom(downloader$);
+      content += chunk.text;
+      start = ++end;
+      end = start + chunkSize;
+      console.info('Chunk douhloaded');
+    }
+    this.updateForm.patchValue(
+      {
+        name: name,
+        txt: content
+      }
+    );
+    alert('Download completed');
+  };
 }

@@ -1,3 +1,0 @@
-dsgd
-gf
-h

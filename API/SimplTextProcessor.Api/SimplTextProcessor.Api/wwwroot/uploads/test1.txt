@@ -1,4 +1,4 @@
-new file
-other text
-and one more text
+text1
+text2
+
 
