@@ -34,7 +34,7 @@ namespace SimplTextProcessor.Api.Controllers
         [HttpPost("upload")]
         public async Task<IActionResult> Upload(TextDto dto)
         {
-            await _textProcessor.ExecuteUpload(dto, _uploadsFolder);
+            await _textProcessor.ExecuteUploadAsync(dto, _uploadsFolder);
             var result = new
             {
                 message = "Upload successful"
@@ -47,7 +47,7 @@ namespace SimplTextProcessor.Api.Controllers
         [HttpGet("download/{name}/start/{start:int}/chunk-size/{chunkSize}")]
         public async Task<IActionResult> Download(string name, int start, int chunkSize)
         {
-            var textDto = await _textProcessor.ExecuteDownload(name, start, chunkSize, _uploadsFolder);
+            var textDto = await _textProcessor.ExecuteDownloadAsync(name, start, chunkSize, _uploadsFolder);
             if (textDto == null)
             {
                 return NotFound();

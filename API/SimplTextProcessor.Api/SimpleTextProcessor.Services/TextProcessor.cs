@@ -24,7 +24,7 @@ namespace SimpleTextProcessor.Services
             return fileDtos;
         }
 
-        public async Task ExecuteUpload(TextDto dto, string folder)
+        public async Task ExecuteUploadAsync(TextDto dto, string folder)
         {
             var tempFileName = dto.Name;
             var tempFullPath = Path.Combine(folder, tempFileName);
@@ -47,8 +47,9 @@ namespace SimpleTextProcessor.Services
             }
         }
 
-        public async Task<TextDto?> ExecuteDownload(string name, int start, int chunkSize, string folder)
+        public async Task<TextDto?> ExecuteDownloadAsync(string name, int start, int chunkSize, string folder)
         {
+            var isLastChunk = false;
             var dirInfo = new DirectoryInfo(folder);
             var files = _fileProcessWrapper.GetFiles(dirInfo);
             var file = files.FirstOrDefault(f => f.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
@@ -60,18 +61,20 @@ namespace SimpleTextProcessor.Services
             var content = await _fileProcessWrapper.ReadToEndAsync(fullPath);
             var totalContentToRead = content.Length - start;
             string chunk = string.Empty;
-            if (totalContentToRead >= chunkSize)
+            if (totalContentToRead > chunkSize)
             {
                 chunk = content[start..(start + chunkSize)];
             }
             else
             {
                 chunk = content[start..(start + totalContentToRead)];
+                isLastChunk = true;
             }
             var textDto = new TextDto()
             {
                 Name = name,
-                Text = chunk
+                Text = chunk,
+                IsLastChunk = isLastChunk
             };
 
             return textDto;

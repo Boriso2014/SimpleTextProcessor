@@ -16,7 +16,7 @@ namespace SimpleTextProcessor.Services
         /// </summary>
         /// <param name="dto">Data to be uploaded</param>
         /// <param name="uploadsFolder">Target folder</param>
-        Task ExecuteUpload(TextDto dto, string uploadsFolder);
+        Task ExecuteUploadAsync(TextDto dto, string uploadsFolder);
 
         /// <summary>
         /// Downloads a file or a file chunk 
@@ -26,7 +26,7 @@ namespace SimpleTextProcessor.Services
         /// <param name="chunkSize">Size of a file chunk</param>
         /// <param name="folder">Source folder</param>
         /// <returns>TextDto object</returns>
-        Task<TextDto?> ExecuteDownload(string name, int start, int chunkSize, string folder);
+        Task<TextDto?> ExecuteDownloadAsync(string name, int start, int chunkSize, string folder);
 
         /// <summary>
         /// Deletes a file
