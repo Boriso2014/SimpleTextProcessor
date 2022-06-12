@@ -28,7 +28,7 @@ namespace SimpleTextProcessor.Services
         {
             var tempFileName = dto.Name;
             var tempFullPath = Path.Combine(folder, tempFileName);
-            await _fileProcessWrapper.WriteLineAsync(tempFullPath, dto.Text, true);
+            await _fileProcessWrapper.WriteLineAsync(tempFullPath, dto.Text, true).ConfigureAwait(false);
 
             // If upload completed delete the existing file (if it exists) and rename the temp file
             if (dto.IsLastChunk)
@@ -58,10 +58,10 @@ namespace SimpleTextProcessor.Services
             {
                 return null;
             }
-            string fullPath = Path.Combine(folder, name);
-            var content = await _fileProcessWrapper.ReadToEndAsync(fullPath);
+            var fullPath = Path.Combine(folder, name);
+            var content = await _fileProcessWrapper.ReadToEndAsync(fullPath).ConfigureAwait(false);
             var totalContentToRead = content.Length - start;
-            string chunk = string.Empty;
+            var chunk = string.Empty;
             if (totalContentToRead > chunkSize)
             {
                 chunk = content[start..(start + chunkSize)];
