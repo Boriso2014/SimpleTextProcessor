@@ -19,9 +19,9 @@ builder.Services.AddCors(options =>
 });
 
 // Add services to the container.
-builder.Services.AddScoped<IFileProcessWrapper, FileProcessWrapper>();
-builder.Services.AddScoped<IFileInfoConverter, FileInfoConverter>();
-builder.Services.AddScoped<ITextProcessor, TextProcessor>();
+builder.Services.AddTransient<IFileProcessWrapper, FileProcessWrapper>();
+builder.Services.AddTransient<IFileInfoConverter, FileInfoConverter>();
+builder.Services.AddTransient<ITextProcessor, TextProcessor>();
 
 builder.Services.AddControllers();
 
