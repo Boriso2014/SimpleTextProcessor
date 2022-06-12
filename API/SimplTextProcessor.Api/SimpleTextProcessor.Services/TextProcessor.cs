@@ -49,6 +49,7 @@ namespace SimpleTextProcessor.Services
 
         public async Task<TextDto?> ExecuteDownloadAsync(string name, int start, int chunkSize, string folder)
         {
+            name = Path.ChangeExtension(name, ".txt");
             var isLastChunk = false;
             var dirInfo = new DirectoryInfo(folder);
             var files = _fileProcessWrapper.GetFiles(dirInfo);
@@ -82,6 +83,7 @@ namespace SimpleTextProcessor.Services
 
         public string ExecuteDeleteFile(string name, string folder)
         {
+            name = Path.ChangeExtension(name, ".txt");
             var message = "Delete successful";
             var fullPath = Path.Combine(folder, name);
             var file = new FileInfo(fullPath);

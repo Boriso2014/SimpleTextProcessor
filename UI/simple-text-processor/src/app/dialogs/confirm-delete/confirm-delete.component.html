@@ -1,16 +1,14 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
+  <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
+</div>
+
+<div class="modal-body">
+  <div class="form-group">
+    {{confirmText}}
   </div>
-  
-  <!-- <form [formGroup]="confirmActionForm" autocomplete="off" novalidate (ngSubmit)="submitForm()"> -->
-    <div class="modal-body">
-      <div class="form-group">
-        {{confirmText}}
-      </div>
-    </div>
-  
-    <div class=" modal-footer">
-      <button class="btn btn-outline-success" (click)="close()">OK</button>
-      <button type="button" class="btn btn-outline-secondary" (click)="dismiss()">Cancel</button>
-    </div>
-  <!-- </form> -->
+</div>
+
+<div class=" modal-footer">
+  <button class="btn btn-outline-success" (click)="close()">OK</button>
+  <button type="button" class="btn btn-outline-secondary" (click)="dismiss()">Cancel</button>
+</div>

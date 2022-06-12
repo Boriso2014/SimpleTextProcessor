@@ -31,17 +31,13 @@ export class AddComponent implements OnInit {
   private async executeUpload(addFormValue: any) {
     const text: string = addFormValue.txt as string;
     const name: string = addFormValue.name as string;
-    // const model: TransferTextModel = {
-    //   name: name,
-    //   text: text
-    // };
+
     const guid: string = Guid.create().toString();
     const tempFileName: string = `${name}_${guid}`;
     const size: number = new Blob([text]).size;
     const chunkSize: number = 500 * 1024;
     let start: number = 0;
     let end: number = chunkSize;
-
 
     while (start < size) {
       const chunkText: string = text.substring(start, end);
@@ -53,7 +49,7 @@ export class AddComponent implements OnInit {
       // upload chunk
       const uploader$ = this._textService.upload(chunkModel);
       const res = await lastValueFrom(uploader$);
-      start = ++end;
+      start = end;
       end = start + chunkSize;
       console.info(res);
     }

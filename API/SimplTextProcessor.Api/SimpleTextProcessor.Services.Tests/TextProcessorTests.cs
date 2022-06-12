@@ -7,20 +7,21 @@ namespace SimpleTextProcessor.Services.Tests
     [TestFixture]
     public sealed class TextProcessorTests
     {
-        private readonly Mock<IFileProcessWrapper> _wrapper;
         private TextProcessor _processor;
-        private string _testFolder = @"c:\test";
-        private string _file1 = "f1.txt";
-        private string _file2 = "f2.txt";
+        private readonly Mock<IFileProcessWrapper> _wrapper;
+        private readonly string _testFolder = @"c:\test";
+        private readonly string _file1 = "f1";
+        private readonly string _file2 = "f2";
         private string _path1;
         private string _path2;
-
 
         public TextProcessorTests()
         {
             _wrapper = new Mock<IFileProcessWrapper>();
             var converter = new FileInfoConverter();
             _processor = new TextProcessor(converter, _wrapper.Object);
+            _file1 = Path.ChangeExtension(_file1, ".txt");
+            _file2 = Path.ChangeExtension(_file2, ".txt");
             _path1 = Path.Combine(_testFolder, _file1);
             _path2 = Path.Combine(_testFolder, _file2);
         }
@@ -54,8 +55,11 @@ namespace SimpleTextProcessor.Services.Tests
             // Assert
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Has.Count.EqualTo(fileInfos.Length));
-            Assert.That(result[0].Name, Is.EqualTo(fileInfos[0].Name));
-            Assert.That(result[1].Name, Is.EqualTo(fileInfos[1].Name));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0].Name, Is.EqualTo(Path.ChangeExtension(fileInfos[0].Name, null)));
+                Assert.That(result[1].Name, Is.EqualTo(Path.ChangeExtension(fileInfos[1].Name, null)));
+            });
         }
 
         [TestCase(5, false)]
@@ -76,9 +80,12 @@ namespace SimpleTextProcessor.Services.Tests
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Name, Is.EqualTo(fi1.Name));
-            Assert.That(result.Text, Is.EqualTo(content[start..(start + chunkSize)]));
-            Assert.That(result.IsLastChunk, Is.EqualTo(isLastChunk));
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Name, Is.EqualTo(fi1.Name));
+                Assert.That(result.Text, Is.EqualTo(content[start..(start + chunkSize)]));
+                Assert.That(result.IsLastChunk, Is.EqualTo(isLastChunk));
+            });
         }
     }
 }

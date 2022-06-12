@@ -8,9 +8,10 @@ namespace SimpleTextProcessor.Services.Converter
         {
             return new FileDto()
             {
-                Name = fileInfo.Name,
+                Name = Path.ChangeExtension(fileInfo.Name, null),
                 Size = fileInfo.Length,
                 CreatedOn = fileInfo.CreationTimeUtc,
+                ModifiedOn=fileInfo.LastWriteTimeUtc
             };
         }
     }
