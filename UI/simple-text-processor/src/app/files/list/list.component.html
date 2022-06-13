@@ -16,8 +16,8 @@
         <tr *ngFor="let file of files">
           <td class="item" (click)="redirectToUpdate(file)">{{ file.name }}</td>
           <td>{{ file.size }}</td>
-          <td>{{ file.createdOn | date:'d/M/yy, HH:mm:ss' }}</td>
-          <td>{{ file.modifiedOn  | date:'d/M/yy, HH:mm:ss' }}</td>
+          <td>{{ file.createdOn | date:'d/M/yy, HH:mm:ss': 'UTC' }}</td>
+          <td>{{ file.modifiedOn  | date:'d/M/yy, HH:mm:ss': 'UTC' }}</td>
           <td class="item" (click)="openDeleteConfirmDialog(file.name)">Delete</td>
         </tr>
       </tbody>

@@ -11,7 +11,7 @@ namespace SimpleTextProcessor.Services.Converter
                 Name = Path.ChangeExtension(fileInfo.Name, null),
                 Size = fileInfo.Length,
                 CreatedOn = fileInfo.CreationTimeUtc,
-                ModifiedOn=fileInfo.LastWriteTimeUtc
+                ModifiedOn = fileInfo.LastWriteTimeUtc
             };
 
         }
