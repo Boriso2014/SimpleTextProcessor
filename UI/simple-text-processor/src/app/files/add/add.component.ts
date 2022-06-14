@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { Guid } from "guid-typescript";
 import { TransferTextModel } from '../transfer-text.model'
 import { TextService } from '../text.service'
-
+import { OpenFileComponent } from 'src/app/dialogs/open-file/open-file.component';
 
 @Component({
   selector: 'app-add',
@@ -15,7 +16,10 @@ import { TextService } from '../text.service'
 export class AddComponent implements OnInit {
   public addForm!: FormGroup;
 
-  constructor(private _textService: TextService, private _router: Router) { }
+
+  constructor(private _textService: TextService,
+    private _router: Router,
+    private _modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.addForm = new FormGroup({
@@ -26,6 +30,36 @@ export class AddComponent implements OnInit {
 
   public submitForm = (addFormValue: any) => {
     this.executeUpload(addFormValue);
+  }
+
+  public openFileDialog = () => {
+    const modalRef = this._modalService.open(OpenFileComponent, {
+      size: "",
+    });
+
+    modalRef.result.then(
+      (res) => {
+        this.readTextFile(res);
+      },
+      (reason) => { }
+    );
+  }
+
+  private readTextFile = (result: any) => {
+    const file: File = result as File;
+    if (file) {
+      const fileName: string =    file.name;
+      let fileReader: FileReader = new FileReader();
+      fileReader.readAsText(file);
+      fileReader.onload = () => {
+        const content: string = fileReader.result as string;
+        this.addForm.patchValue(
+          {
+            name: fileName.substring(0, fileName.lastIndexOf('.')) || fileName,
+            txt: content
+          })
+      }
+    }
   }
 
   private async executeUpload(addFormValue: any) {

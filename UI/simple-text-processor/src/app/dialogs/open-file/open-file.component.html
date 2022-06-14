@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Open text file</h4>
+  </div>
+  
+  <form [formGroup]="openTxtFileForm" autocomplete="off" novalidate (ngSubmit)="submitForm()">
+    <div class="modal-body">
+      <div class="input-group">
+        <div class="custom-file">
+          <input type="file" accept=".txt" class="custom-file-input" id="chooseFile" formControlName="chooseFile" (change)="onFileChange($event)">
+        </div>
+      </div>
+      <small class="text-danger" *ngIf="hasError('chooseFile', 'invalidFileType')">Selected file type is invalid. The valid file is *.txt</small>
+      <small class="text-danger" *ngIf="(hasError('chooseFile', 'required') && openTxtFileForm.controls['chooseFile'].dirty)">Field is
+        required</small>
+    </div>
+  
+    <div class=" modal-footer">
+      <button class="btn btn-outline-success" [disabled]="!isFileValid">Open</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="closeForm()">Cancel</button>
+    </div>
+  </form>

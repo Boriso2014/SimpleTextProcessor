@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { AddComponent } from './files/add/add.component';
 import { UpdateComponent } from './files/update/update.component';
 import { ConfirmDeleteComponent } from './dialogs/confirm-delete/confirm-delete.component';
+import { OpenFileComponent } from './dialogs/open-file/open-file.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ConfirmDeleteComponent } from './dialogs/confirm-delete/confirm-delete.
     HomeComponent,
     AddComponent,
     UpdateComponent,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    OpenFileComponent
   ],
   imports: [
     BrowserModule,

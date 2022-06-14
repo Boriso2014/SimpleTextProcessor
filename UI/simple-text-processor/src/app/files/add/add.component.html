@@ -1,5 +1,6 @@
 <div class="container">
   <button type=button class="btn btn-light" (click)="goToFiles()"><u>Go to files</u></button>
+  <button type=button class="btn btn-light" (click)="openFileDialog()"><u>Open file</u></button>
   <form [formGroup]="addForm" autocomplete="off" novalidate (ngSubmit)="submitForm(addForm.value)">
     <div class="form-group">
       <textarea id="txt" class="form-control" formControlName="txt" placeholder="Enter your text" requered
