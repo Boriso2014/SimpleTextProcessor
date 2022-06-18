@@ -17,8 +17,7 @@ namespace SimpleTextProcessor.Services
 
         public IEnumerable<FileDto> ExecuteGetFiles(string uploadsFolder)
         {
-            var dirInfo = new DirectoryInfo(uploadsFolder);
-            var files = _fileProcessWrapper.GetFiles(dirInfo);
+            var files = _fileProcessWrapper.GetFiles(uploadsFolder);
             var fileDtos = files.Select(f => _fileInfoConverter.Convert(f));
 
             return fileDtos;
@@ -28,7 +27,7 @@ namespace SimpleTextProcessor.Services
         {
             var tempFileName = dto.Name;
             var tempFullPath = Path.Combine(folder, tempFileName);
-            await _fileProcessWrapper.WriteLineAsync(tempFullPath, dto.Text, true).ConfigureAwait(false);
+            await _fileProcessWrapper.AppendTextAsync(tempFullPath, dto.Text).ConfigureAwait(false);
 
             // If upload completed delete the existing file (if it exists) and rename the temp file
             if (dto.IsLastChunk)
@@ -36,14 +35,12 @@ namespace SimpleTextProcessor.Services
                 // The temp file name pattern is <file name w/o extension>_<GUID>
                 var fileName = Path.ChangeExtension(tempFileName.Split('_').First(), ".txt");
                 var fullPath = Path.Combine(folder, fileName);
-                var file = new FileInfo(fullPath);
-                if (_fileProcessWrapper.FileExists(file))
+                if (_fileProcessWrapper.FileExists(fullPath))
                 {
-                    _fileProcessWrapper.FileDelete(file);
+                    _fileProcessWrapper.FileDelete(fullPath);
                 }
                 
-                file = new FileInfo(tempFullPath);
-                _fileProcessWrapper.MoveTo(file, fullPath);
+                _fileProcessWrapper.MoveTo(tempFullPath, fullPath);
             }
         }
 
@@ -51,8 +48,7 @@ namespace SimpleTextProcessor.Services
         {
             name = Path.ChangeExtension(name, ".txt");
             var isLastChunk = false;
-            var dirInfo = new DirectoryInfo(folder);
-            var files = _fileProcessWrapper.GetFiles(dirInfo);
+            var files = _fileProcessWrapper.GetFiles(folder);
             var file = files.FirstOrDefault(f => f.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
             if (file == null)
             {
@@ -86,10 +82,9 @@ namespace SimpleTextProcessor.Services
             name = Path.ChangeExtension(name, ".txt");
             var message = "Delete successful";
             var fullPath = Path.Combine(folder, name);
-            var file = new FileInfo(fullPath);
-            if (_fileProcessWrapper.FileExists(file))
+            if (_fileProcessWrapper.FileExists(fullPath))
             {
-                _fileProcessWrapper.FileDelete(file);
+                _fileProcessWrapper.FileDelete(fullPath);
             }
             else
             {

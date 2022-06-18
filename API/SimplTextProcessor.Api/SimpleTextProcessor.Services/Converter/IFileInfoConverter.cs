@@ -1,4 +1,5 @@
-﻿using SimpleTextProcessor.Services.Dto;
+﻿using System.IO.Abstractions;
+using SimpleTextProcessor.Services.Dto;
 
 namespace SimpleTextProcessor.Services.Converter
 {
@@ -7,8 +8,8 @@ namespace SimpleTextProcessor.Services.Converter
         /// <summary>
         /// Converts FileInfo to FileDto object
         /// </summary>
-        /// <param name="FileInfo">FileInfo object</param>
+        /// <param name="fileInfo">FileInfo object</param>
         /// <returns>FileDto object</returns>
-        FileDto Convert(FileInfo fileInfo);
+        FileDto Convert(IFileInfo fileInfo);
     }
 }

@@ -12,7 +12,7 @@
     "SimplTextProcessor.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api/texts",
       "applicationUrl": "http://localhost:5036",
       "environmentVariables": {

@@ -1,10 +1,11 @@
-﻿using SimpleTextProcessor.Services.Dto;
+﻿using System.IO.Abstractions;
+using SimpleTextProcessor.Services.Dto;
 
 namespace SimpleTextProcessor.Services.Converter
 {
     public sealed class FileInfoConverter : IFileInfoConverter
     {
-        public FileDto Convert(FileInfo fileInfo)
+        public FileDto Convert(IFileInfo fileInfo)
         {
             return new FileDto()
             {

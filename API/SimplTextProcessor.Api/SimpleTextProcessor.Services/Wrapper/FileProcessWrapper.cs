@@ -1,38 +1,48 @@
-﻿namespace SimpleTextProcessor.Services.Wrapper
+﻿using System.IO.Abstractions;
+
+namespace SimpleTextProcessor.Services.Wrapper
 {
     public sealed class FileProcessWrapper: IFileProcessWrapper
     {
-        public async Task WriteLineAsync(string path, string text, bool append)
+        private readonly IFileSystem _fileSystem;
+
+        public FileProcessWrapper(IFileSystem fileSystem)
         {
-            using var writer = new StreamWriter(path, append);
+            _fileSystem = fileSystem;
+        }
+
+        public async Task AppendTextAsync(string path, string text)
+        {
+            using var writer = _fileSystem.File.AppendText(path);
             await writer.WriteAsync(text);
+            await writer.FlushAsync();
         }
 
         public async Task<string> ReadToEndAsync(string path)
         {
-            using var reader = new StreamReader(path);
+            using var reader = _fileSystem.File.OpenText(path);
             var content = await reader.ReadToEndAsync();
             return content;
         }
 
-        public bool FileExists(FileInfo file)
+        public bool FileExists(string path)
         {
-            return file.Exists;
+            return _fileSystem.File.Exists(path);
         }
 
-        public void FileDelete(FileInfo file)
+        public void FileDelete(string path)
         {
-            file.Delete();
+            _fileSystem.File.Delete(path);
         }
 
-        public void MoveTo(FileInfo file, string targetFilePath)
+        public void MoveTo(string sourceFilePath, string targetFilePath)
         {
-            file.MoveTo(targetFilePath);
+            _fileSystem.File.Move(sourceFilePath, targetFilePath);
         }
 
-        public FileInfo[] GetFiles(DirectoryInfo dirInfo)
+        public IFileInfo[] GetFiles(string dirPath)
         {
-            var files = dirInfo.GetFiles();
+            var files = _fileSystem.DirectoryInfo.FromDirectoryName(dirPath).GetFiles();
             return files;
         }
     }

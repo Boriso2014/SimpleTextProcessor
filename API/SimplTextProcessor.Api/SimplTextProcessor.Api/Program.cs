@@ -1,4 +1,5 @@
 
+using System.IO.Abstractions;
 using SimpleTextProcessor.Services;
 using SimpleTextProcessor.Services.Converter;
 using SimpleTextProcessor.Services.Middleware;
@@ -19,9 +20,10 @@ builder.Services.AddCors(options =>
 });
 
 // Add services to the container.
-builder.Services.AddTransient<IFileProcessWrapper, FileProcessWrapper>();
-builder.Services.AddTransient<IFileInfoConverter, FileInfoConverter>();
-builder.Services.AddTransient<ITextProcessor, TextProcessor>();
+builder.Services.AddSingleton<IFileSystem, FileSystem>();
+builder.Services.AddSingleton<IFileProcessWrapper, FileProcessWrapper>();
+builder.Services.AddSingleton<IFileInfoConverter, FileInfoConverter>();
+builder.Services.AddScoped<ITextProcessor, TextProcessor>();
 
 builder.Services.AddControllers();
 
