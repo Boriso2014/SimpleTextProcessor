@@ -1,4 +1,4 @@
-﻿namespace SimpleTextProcessor.Services.Middleware
+﻿namespace SimpleTextProcessor.Infrastructure.Middleware
 {
     public class ErrorDetails
     {

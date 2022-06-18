@@ -1,4 +1,4 @@
-﻿namespace SimpleTextProcessor.Services.Dto
+﻿namespace SimpleTextProcessor.Infrastructure.Dto
 {
     public sealed class FileDto
     {

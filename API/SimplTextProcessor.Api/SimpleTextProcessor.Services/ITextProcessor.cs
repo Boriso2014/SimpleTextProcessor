@@ -1,4 +1,4 @@
-﻿using SimpleTextProcessor.Services.Dto;
+﻿using SimpleTextProcessor.Infrastructure.Dto;
 
 namespace SimpleTextProcessor.Services
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SimpleTextProcessor.Services;
-using SimpleTextProcessor.Services.Dto;
+using SimpleTextProcessor.Infrastructure.Dto;
 
 namespace SimplTextProcessor.Api.Controllers
 {

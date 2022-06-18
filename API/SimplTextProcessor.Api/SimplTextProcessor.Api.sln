@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplTextProcessor.Api", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTextProcessor.Services", "SimpleTextProcessor.Services\SimpleTextProcessor.Services.csproj", "{84A5DFBF-AF9A-4621-81E1-A31B0B89CB84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTextProcessor.Services.Tests", "SimpleTextProcessor.Services.Tests\SimpleTextProcessor.Services.Tests.csproj", "{E2238508-23DE-4C46-B778-273C89DEE39C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTextProcessor.Services.Tests", "SimpleTextProcessor.Services.Tests\SimpleTextProcessor.Services.Tests.csproj", "{E2238508-23DE-4C46-B778-273C89DEE39C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplTextProcessor.Infrastructure", "SimplTextProcessor.Infrastructure\SimplTextProcessor.Infrastructure.csproj", "{79E2EDB1-24AF-4DC2-BA83-710D1326812C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{E2238508-23DE-4C46-B778-273C89DEE39C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2238508-23DE-4C46-B778-273C89DEE39C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2238508-23DE-4C46-B778-273C89DEE39C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79E2EDB1-24AF-4DC2-BA83-710D1326812C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79E2EDB1-24AF-4DC2-BA83-710D1326812C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79E2EDB1-24AF-4DC2-BA83-710D1326812C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79E2EDB1-24AF-4DC2-BA83-710D1326812C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,6 @@
 ﻿using System.IO.Abstractions.TestingHelpers;
-using SimpleTextProcessor.Services.Converter;
-using SimpleTextProcessor.Services.Dto;
+using SimpleTextProcessor.Infrastructure.Converter;
+using SimpleTextProcessor.Infrastructure.Dto;
 using SimpleTextProcessor.Services.Wrapper;
 
 namespace SimpleTextProcessor.Services.Tests

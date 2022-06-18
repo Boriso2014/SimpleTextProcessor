@@ -1,7 +1,7 @@
 ﻿using System.IO.Abstractions;
-using SimpleTextProcessor.Services.Dto;
+using SimpleTextProcessor.Infrastructure.Dto;
 
-namespace SimpleTextProcessor.Services.Converter
+namespace SimpleTextProcessor.Infrastructure.Converter
 {
     public interface IFileInfoConverter
     {

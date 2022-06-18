@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace SimpleTextProcessor.Services.Middleware
+namespace SimpleTextProcessor.Infrastructure.Middleware
 {
     public static class GlobalExceptionHandlerRegistration
     {

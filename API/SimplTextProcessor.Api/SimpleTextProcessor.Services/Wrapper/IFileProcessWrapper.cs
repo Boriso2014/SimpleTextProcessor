@@ -5,7 +5,7 @@ namespace SimpleTextProcessor.Services.Wrapper
     public interface IFileProcessWrapper
     {
         /// <summary>
-        /// Asynchronously writes a text to the stream
+        /// Asynchronously appends a text to the stream
         /// </summary>
         /// <param name="path">Full file path to write to</param>
         /// <param name="text">Text to write</param>

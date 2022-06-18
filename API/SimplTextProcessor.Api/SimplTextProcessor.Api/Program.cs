@@ -1,8 +1,7 @@
-
 using System.IO.Abstractions;
 using SimpleTextProcessor.Services;
-using SimpleTextProcessor.Services.Converter;
-using SimpleTextProcessor.Services.Middleware;
+using SimpleTextProcessor.Infrastructure.Converter;
+using SimpleTextProcessor.Infrastructure.Middleware;
 using SimpleTextProcessor.Services.Wrapper;
 
 var simpleTextProcessorOrigins = "SimpleTextProcessorOrigins";

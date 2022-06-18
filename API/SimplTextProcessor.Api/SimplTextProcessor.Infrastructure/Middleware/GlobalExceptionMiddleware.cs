@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Logging;
 
-namespace SimpleTextProcessor.Services.Middleware
+namespace SimpleTextProcessor.Infrastructure.Middleware
 {
     public class GlobalExceptionMiddleware
     {
