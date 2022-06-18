@@ -26,15 +26,15 @@ namespace SimpleTextProcessor.Services
         public async Task ExecuteUploadAsync(TextDto dto, string folder)
         {
             var tempFileName = dto.Name;
-            var tempFullPath = Path.Combine(folder, tempFileName);
+            var tempFullPath = _fileProcessWrapper.PathCombine(folder, tempFileName);
             await _fileProcessWrapper.AppendTextAsync(tempFullPath, dto.Text).ConfigureAwait(false);
 
             // If upload completed delete the existing file (if it exists) and rename the temp file
             if (dto.IsLastChunk)
             {
                 // The temp file name pattern is <file name w/o extension>_<GUID>
-                var fileName = Path.ChangeExtension(tempFileName.Split('_').First(), ".txt");
-                var fullPath = Path.Combine(folder, fileName);
+                var fileName = _fileProcessWrapper.ChangeExtension(tempFileName.Split('_').First(), ".txt");
+                var fullPath = _fileProcessWrapper.PathCombine(folder, fileName);
                 if (_fileProcessWrapper.FileExists(fullPath))
                 {
                     _fileProcessWrapper.FileDelete(fullPath);
@@ -46,7 +46,7 @@ namespace SimpleTextProcessor.Services
 
         public async Task<TextDto?> ExecuteDownloadAsync(string name, int start, int chunkSize, string folder)
         {
-            name = Path.ChangeExtension(name, ".txt");
+            name = _fileProcessWrapper.ChangeExtension(name, ".txt");
             var isLastChunk = false;
             var files = _fileProcessWrapper.GetFiles(folder);
             var file = files.FirstOrDefault(f => f.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
@@ -54,7 +54,7 @@ namespace SimpleTextProcessor.Services
             {
                 return null;
             }
-            var fullPath = Path.Combine(folder, name);
+            var fullPath = _fileProcessWrapper.PathCombine(folder, name);
             var content = await _fileProcessWrapper.ReadToEndAsync(fullPath).ConfigureAwait(false);
             var totalContentToRead = content.Length - start;
             var chunk = string.Empty;
@@ -79,9 +79,9 @@ namespace SimpleTextProcessor.Services
 
         public string ExecuteDeleteFile(string name, string folder)
         {
-            name = Path.ChangeExtension(name, ".txt");
+            name = _fileProcessWrapper.ChangeExtension(name, ".txt");
             var message = "Delete successful";
-            var fullPath = Path.Combine(folder, name);
+            var fullPath = _fileProcessWrapper.PathCombine(folder, name);
             if (_fileProcessWrapper.FileExists(fullPath))
             {
                 _fileProcessWrapper.FileDelete(fullPath);

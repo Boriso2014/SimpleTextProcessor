@@ -19,7 +19,7 @@ namespace SimpleTextProcessor.Services.Wrapper
         Task<string> ReadToEndAsync(string path);
 
         /// <summary>
-        /// Check if the specified file exists
+        /// Checks if the specified file exists
         /// </summary>
         /// <param name="path">Path to a file</param>
         /// <returns>TRUE if a file exists</returns>
@@ -44,5 +44,34 @@ namespace SimpleTextProcessor.Services.Wrapper
         /// <param name="dirPath">Directory path</param>
         /// <returns> An array of IFileInfo objects</returns>
         IFileInfo[] GetFiles(string dirPath);
+
+        /// <summary>
+        /// Changes file extension
+        /// </summary>
+        /// <param name="path">Path to a file</param>
+        /// <param name="ext">New extension. NULL will remove an existing extension</param>
+        /// <returns>The modified path</returns>
+        string ChangeExtension(string path, string ext);
+
+        /// <summary>
+        /// Combines two path strings into a single path
+        /// </summary>
+        /// <param name="path1">First path to be combined</param>
+        /// <param name="path2">Second path to be combined</param>
+        /// <returns>The combined paths</returns>
+        string PathCombine(string path1, string path2);
+
+        /// <summary>
+        /// Checks if the specified directory exists
+        /// </summary>
+        /// <param name="dirPath">Directory path</param>
+        /// <returns>TRUE if a directory exists</returns>
+        bool DirectoryExists(string dirPath);
+
+        /// <summary>
+        /// Creates all directories and subdirectories in the specified directory path unless they already exist.
+        /// </summary>
+        /// <param name="dirPath">Directory to be created</param>
+        void CreateDirectory(string dirPath);
     }
 }

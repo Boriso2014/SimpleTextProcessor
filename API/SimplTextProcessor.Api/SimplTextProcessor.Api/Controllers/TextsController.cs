@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SimpleTextProcessor.Services;
 using SimpleTextProcessor.Infrastructure.Dto;
+using SimpleTextProcessor.Services.Wrapper;
 
 namespace SimplTextProcessor.Api.Controllers
 {
@@ -11,14 +12,14 @@ namespace SimplTextProcessor.Api.Controllers
         private readonly string _uploadsFolder;
         private readonly ITextProcessor _textProcessor;
 
-        public TextsController(IWebHostEnvironment hostingEnvironment, ITextProcessor textProcessor)
+        public TextsController(IWebHostEnvironment hostingEnvironment, ITextProcessor textProcessor, IFileProcessWrapper fileProcessWrapper)
         {
             _textProcessor = textProcessor;
             var webRootPath = hostingEnvironment.WebRootPath;
-            _uploadsFolder = Path.Combine(webRootPath, "uploads");
-            if (!Directory.Exists(_uploadsFolder))
+            _uploadsFolder = fileProcessWrapper.PathCombine(webRootPath, "uploads");
+            if (!fileProcessWrapper.DirectoryExists(_uploadsFolder))
             {
-                Directory.CreateDirectory(_uploadsFolder);
+                fileProcessWrapper.CreateDirectory(_uploadsFolder);
             }
         }
 
