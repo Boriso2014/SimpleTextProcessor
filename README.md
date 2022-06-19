@@ -9,4 +9,4 @@ Large files upload and download chunk by chunk.
 
 Thit is a demo application. It does not contain any authentication/authoriuzation stuff. Text files keep on the server side, but the better solution is to save them somewhere outside of the server (e.g. Amazon S3, Azure Blob storage). It can be done by appropriate implementation IFileProcessWrapper abstraction.
 
-Thech stack: .NET 6, C#, Angular 13, Bootstrap 5.
+Tech stack: .NET 6, C#, Angular 13, Bootstrap 5.
