@@ -5,6 +5,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FileModel } from '../file.model'
 import { TextService } from '../text.service'
 import { ConfirmDeleteComponent } from 'src/app/dialogs/confirm-delete/confirm-delete.component';
+import { NotificationService } from '../../notification/notification.service';
 
 @Component({
   selector: 'app-list',
@@ -14,6 +15,7 @@ import { ConfirmDeleteComponent } from 'src/app/dialogs/confirm-delete/confirm-d
 export class ListComponent implements OnInit {
   public files: FileModel[] = [];
   constructor(private _textService: TextService,
+    private _notificationService: NotificationService,
     private _router: Router,
     private _modalService: NgbModal) { }
 
@@ -66,7 +68,7 @@ export class ListComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.getFiles();
-          alert(res.message);
+          this._notificationService.showSuccess(res.message);
           console.info(res.message);
         },
         error: (err: any) => {

@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { Guid } from "guid-typescript";
 import { TransferTextModel } from '../transfer-text.model'
 import { TextService } from '../text.service'
+import { NotificationService } from '../../notification/notification.service';
 
 @Component({
   selector: 'app-update',
@@ -15,6 +16,7 @@ export class UpdateComponent implements OnInit {
   public updateForm!: FormGroup;
 
   constructor(private _textService: TextService,
+    private _notificationService: NotificationService,
     private _router: Router,
     private _activeRoute: ActivatedRoute) { }
 
@@ -56,7 +58,7 @@ export class UpdateComponent implements OnInit {
       end = start + chunkSize;
       console.info(res);
     }
-    alert('Upload completed');
+    this._notificationService.showSuccess('Upload completed');
   };
 
   public goToFiles = () => {
@@ -90,6 +92,6 @@ export class UpdateComponent implements OnInit {
         txt: content
       }
     );
-    console.info('Download completed');
+    this._notificationService.showSuccess('Download completed');
   };
 }

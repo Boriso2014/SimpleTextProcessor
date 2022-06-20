@@ -6,7 +6,8 @@ import { lastValueFrom } from 'rxjs';
 import { Guid } from "guid-typescript";
 import { TransferTextModel } from '../transfer-text.model'
 import { TextService } from '../text.service'
-import { OpenFileComponent } from 'src/app/dialogs/open-file/open-file.component';
+import { OpenFileComponent } from '../../dialogs/open-file/open-file.component';
+import { NotificationService } from '../../notification/notification.service';
 
 @Component({
   selector: 'app-add',
@@ -18,6 +19,7 @@ export class AddComponent implements OnInit {
 
 
   constructor(private _textService: TextService,
+    private _notificationService: NotificationService,
     private _router: Router,
     private _modalService: NgbModal) { }
 
@@ -87,7 +89,7 @@ export class AddComponent implements OnInit {
       end = start + chunkSize;
       console.info(res);
     }
-    alert('Upload completed');
+    this._notificationService.showSuccess('Upload completed');
   };
 
   public goToFiles = () => {
