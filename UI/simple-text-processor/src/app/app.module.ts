@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
 
@@ -14,6 +15,8 @@ import { AddComponent } from './files/add/add.component';
 import { UpdateComponent } from './files/update/update.component';
 import { ConfirmDeleteComponent } from './dialogs/confirm-delete/confirm-delete.component';
 import { OpenFileComponent } from './dialogs/open-file/open-file.component';
+import { GlobalErrorHandlerService } from './error-handlers/global/global-error-handler.service';
+import { HttpErrorInterceptor } from './error-handlers/http/http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -31,11 +34,22 @@ import { OpenFileComponent } from './dialogs/open-file/open-file.component';
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
+    NoopAnimationsModule,
     ToastrModule.forRoot({
       preventDuplicates: true
     })
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandlerService
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

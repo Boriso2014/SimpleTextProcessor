@@ -6,6 +6,7 @@ import { FileModel } from '../file.model'
 import { TextService } from '../text.service'
 import { ConfirmDeleteComponent } from 'src/app/dialogs/confirm-delete/confirm-delete.component';
 import { NotificationService } from '../../notification/notification.service';
+import { ErrorService } from 'src/app/error-handlers/error.service';
 
 @Component({
   selector: 'app-list',
@@ -16,6 +17,7 @@ export class ListComponent implements OnInit {
   public files: FileModel[] = [];
   constructor(private _textService: TextService,
     private _notificationService: NotificationService,
+    private _errorService: ErrorService,
     private _router: Router,
     private _modalService: NgbModal) { }
 
@@ -32,6 +34,7 @@ export class ListComponent implements OnInit {
         error: (err: any) => {
           // Handle an error
           console.error(err);
+          this._errorService.throwException(err, 'getFiles', 'Unable to get files.');
         }
       });
   }
@@ -69,11 +72,10 @@ export class ListComponent implements OnInit {
         next: (res: any) => {
           this.getFiles();
           this._notificationService.showSuccess(res.message);
-          console.info(res.message);
         },
         error: (err: any) => {
           // Handle an error
-          console.error(err);
+          this._errorService.throwException(err, 'executeDeleteFile', `Unable to delete the file ${name}`);
         }
       });
   }
