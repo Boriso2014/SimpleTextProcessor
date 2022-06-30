@@ -33,7 +33,6 @@ export class ListComponent implements OnInit {
         },
         error: (err: any) => {
           // Handle an error
-          console.error(err);
           this._errorService.throwException(err, 'getFiles', 'Unable to get files.');
         }
       });

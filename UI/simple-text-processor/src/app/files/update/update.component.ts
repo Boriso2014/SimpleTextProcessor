@@ -6,6 +6,7 @@ import { Guid } from "guid-typescript";
 import { TransferTextModel } from '../transfer-text.model'
 import { TextService } from '../text.service'
 import { NotificationService } from '../../notification/notification.service';
+import * as AppConstants from '../../app.constants';
 
 @Component({
   selector: 'app-update',
@@ -40,7 +41,7 @@ export class UpdateComponent implements OnInit {
     const guid: string = Guid.create().toString();
     const tempFileName: string = `${name}_${guid}`;
     const size: number = new Blob([text]).size;
-    const chunkSize: number = 500 * 1024;
+    const chunkSize: number = AppConstants.CHUNK_SIZE;
     let start: number = 0;
     let end: number = chunkSize;
 
@@ -56,7 +57,6 @@ export class UpdateComponent implements OnInit {
       const res = await lastValueFrom(uploader$);
       start = end;
       end = start + chunkSize;
-      console.info(res);
     }
     this._notificationService.showSuccess('Upload completed');
   };
@@ -73,7 +73,7 @@ export class UpdateComponent implements OnInit {
   private async executeDownload() {
     const name: string = this._activeRoute.snapshot.params['name'];
     const size: number = this._activeRoute.snapshot.params['size'] as number;
-    const chunkSize: number = 500 * 1024;
+    const chunkSize: number = 500 * 1024; // TODO: Make constant
     let start: number = 0;
     let end: number = chunkSize;
     let content: string = '';
@@ -84,7 +84,6 @@ export class UpdateComponent implements OnInit {
       content += chunk.text;
       start = end;
       end = start + chunkSize;
-      console.info('Chunk douhloaded');
     }
     this.updateForm.patchValue(
       {

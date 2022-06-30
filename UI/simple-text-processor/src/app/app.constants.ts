@@ -1,0 +1,1 @@
+export const CHUNK_SIZE: number = 500 * 1024;

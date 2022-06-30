@@ -6,7 +6,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
       .pipe(
-        retry(0), 
+        retry(0),
         catchError((error: HttpErrorResponse) => {
           let errorMessage = '';
           if (error.error instanceof ErrorEvent) {
@@ -14,9 +14,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             errorMessage = `Error on client-side: ${error.error.message}`;
           } else {
             // Error on server-side
-            errorMessage = `Error on server-side. Status code: ${error.status}\nMessage: ${error.error}`;
+            let msg: string = error.message;
+            if (error.error) {
+              msg = `${msg}\n${error.error}`;
+            }
+            errorMessage = `Error on server-side. Status code: ${error.status}\nMessage: ${msg}`;
           }
-          return throwError(() => new Error( errorMessage));
+          return throwError(() => new Error(errorMessage));
         })
       )
   }

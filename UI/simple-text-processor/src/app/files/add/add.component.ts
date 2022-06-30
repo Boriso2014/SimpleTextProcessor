@@ -8,6 +8,7 @@ import { TransferTextModel } from '../transfer-text.model'
 import { TextService } from '../text.service'
 import { OpenFileComponent } from '../../dialogs/open-file/open-file.component';
 import { NotificationService } from '../../notification/notification.service';
+import * as AppConstants from '../../app.constants';
 
 @Component({
   selector: 'app-add',
@@ -71,7 +72,7 @@ export class AddComponent implements OnInit {
     const guid: string = Guid.create().toString();
     const tempFileName: string = `${name}_${guid}`;
     const size: number = new Blob([text]).size;
-    const chunkSize: number = 500 * 1024;
+    const chunkSize: number = AppConstants.CHUNK_SIZE;
     let start: number = 0;
     let end: number = chunkSize;
 
@@ -87,7 +88,6 @@ export class AddComponent implements OnInit {
       const res = await lastValueFrom(uploader$);
       start = end;
       end = start + chunkSize;
-      console.info(res);
     }
     this._notificationService.showSuccess('Upload completed');
   };
