@@ -17,7 +17,6 @@ namespace SimpleTextProcessor.Services
 
         public IEnumerable<FileDto> ExecuteGetFiles(string uploadsFolder)
         {
-            throw new Exception("EXCEPTION in ExecuteGetFiles");
             var files = _fileProcessWrapper.GetFiles(uploadsFolder);
             var fileDtos = files.Select(f => _fileInfoConverter.Convert(f));
 

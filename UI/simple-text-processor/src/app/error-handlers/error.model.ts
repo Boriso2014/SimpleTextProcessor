@@ -1,6 +1,7 @@
 export class ErrorModel {
   errType: string = '';
-  innerException: any;
-  source: string = '';
+  message: string = '';
+  code?: number;
   notification: string = '';
+  stack: string = '';
 }

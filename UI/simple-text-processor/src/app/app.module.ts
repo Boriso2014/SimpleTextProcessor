@@ -17,6 +17,7 @@ import { ConfirmDeleteComponent } from './dialogs/confirm-delete/confirm-delete.
 import { OpenFileComponent } from './dialogs/open-file/open-file.component';
 import { GlobalErrorHandlerService } from './error-handlers/global/global-error-handler.service';
 import { HttpErrorInterceptor } from './error-handlers/http/http-error.interceptor';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HttpErrorInterceptor } from './error-handlers/http/http-error.intercept
     AddComponent,
     UpdateComponent,
     ConfirmDeleteComponent,
-    OpenFileComponent
+    OpenFileComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,7 @@
+<div class="container">
+    <h4>{{title}}</h4>
+    <p><b>ERROR: </b>{{message}}</p>
+    <p *ngIf="code && code!=0"><b>Code: </b>{{code}}</p>
+    <p><b>Stack: </b>{{stack}}</p>
+    <button class="btn btn-primary" (click)="goToHome()">Go to Home</button>
+</div>

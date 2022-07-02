@@ -73,7 +73,7 @@ export class UpdateComponent implements OnInit {
   private async executeDownload() {
     const name: string = this._activeRoute.snapshot.params['name'];
     const size: number = this._activeRoute.snapshot.params['size'] as number;
-    const chunkSize: number = 500 * 1024; // TODO: Make constant
+    const chunkSize: number = AppConstants.CHUNK_SIZE
     let start: number = 0;
     let end: number = chunkSize;
     let content: string = '';
