@@ -1,5 +1,5 @@
-# Simple Test Processor
-Simple Test Processor is a web application that allows to perform CRUD operations on simple text files. The web application has a simple text editor that allows users:
+# Simple Text Processor
+Simple Text Processor is a web application that allows to perform CRUD operations on simple text files. The web application has a simple text editor that allows users:
 - To type text and save it as a text file on the server-side
 - To upload text files via a local computer, including large files
 - To fetch back a specific file from the saved files, and update its content via the web text editor
