@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
@@ -16,7 +16,7 @@ import * as AppConstants from '../../app.constants';
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
-  public addForm!: FormGroup;
+  public addForm!: UntypedFormGroup;
 
 
   constructor(private _textService: TextService,
@@ -25,9 +25,9 @@ export class AddComponent implements OnInit {
     private _modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.addForm = new FormGroup({
-      txt: new FormControl('', [Validators.required]),
-      name: new FormControl('', [Validators.required])
+    this.addForm = new UntypedFormGroup({
+      txt: new UntypedFormControl('', [Validators.required]),
+      name: new UntypedFormControl('', [Validators.required])
     });
   }
 

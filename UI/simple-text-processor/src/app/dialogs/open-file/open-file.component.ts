@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { FormControl, FormGroup, AbstractControl, Validators } from "@angular/forms";
+import { UntypedFormControl, UntypedFormGroup, AbstractControl, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-open-file',
@@ -11,13 +11,13 @@ export class OpenFileComponent implements OnInit {
   public fileToUpload: File | undefined;
   public fileName: string = "Choose file";
   public isFileValid: boolean = false;
-  public openTxtFileForm!: FormGroup;
+  public openTxtFileForm!: UntypedFormGroup;
 
   constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
-    this.openTxtFileForm = new FormGroup({
-      chooseFile: new FormControl("", Validators.required),
+    this.openTxtFileForm = new UntypedFormGroup({
+      chooseFile: new UntypedFormControl("", Validators.required),
     });
   }
 

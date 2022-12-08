@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { Guid } from "guid-typescript";
@@ -14,7 +14,7 @@ import * as AppConstants from '../../app.constants';
   styleUrls: ['./update.component.scss']
 })
 export class UpdateComponent implements OnInit {
-  public updateForm!: FormGroup;
+  public updateForm!: UntypedFormGroup;
 
   constructor(private _textService: TextService,
     private _notificationService: NotificationService,
@@ -22,9 +22,9 @@ export class UpdateComponent implements OnInit {
     private _activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.updateForm = new FormGroup({
-      txt: new FormControl('', [Validators.required]),
-      name: new FormControl('', [Validators.required])
+    this.updateForm = new UntypedFormGroup({
+      txt: new UntypedFormControl('', [Validators.required]),
+      name: new UntypedFormControl('', [Validators.required])
     });
     this.executeDownload();
   }
